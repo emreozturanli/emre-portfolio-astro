@@ -3,9 +3,9 @@ name: generate-tech-stack-page
 description: Generate a grouped tech stack page by category (frontend, backend, tools, etc).
 ---
 
-# Generate Tech Stack Page
+# Generate Tech Stack
 
-Generate a tech stack page organized by category.
+Generate tech stack entries for `src/data/stack.ts`.
 
 ## Inputs
 
@@ -13,46 +13,24 @@ Generate a tech stack page organized by category.
 
 ## Output
 
-A markdown tech stack page with technologies grouped by category.
+- TypeScript objects to append to `src/data/stack.ts`
 
 ## Instructions
 
 1. **Collect Information**
    - Get the list of technologies
-   - Categorize each technology
+   - Categorize each technology into: 'frontend', 'backend', 'devops', 'tools', 'languages', 'testing'
 
-2. **Categories**
-   Organize technologies into these groups:
-   - **Frontend**: React, Vue, Astro, Tailwind, etc.
-   - **Backend**: Node.js, Python, Go, etc.
-   - **Database**: PostgreSQL, MongoDB, Redis, etc.
-   - **DevOps**: Docker, AWS, Vercel, etc.
-   - **Tools**: Git, VS Code, Figma, etc.
-   - **Languages**: TypeScript, JavaScript, Python, etc.
+2. **Format**
+   Create objects matching `TechItem` interface:
 
-3. **Format**
-
-   ```markdown
-   ## Frontend
-
-   - **React** - UI library for building interfaces
-   - **Tailwind CSS** - Utility-first CSS framework
-
-   ## Backend
-
-   - **Node.js** - JavaScript runtime
-   - **Express** - Web framework for Node.js
+   ```typescript
+   { name: 'Name', icon: 'fa6-brands:icon-name', category: 'frontend' },
    ```
 
-4. **Technology Entry Format**
-   - Name in bold
-   - Brief description (one line)
-   - Optional: years of experience or proficiency level
+3. **Icons**
+   - Use `fa6-brands` or `fa6-solid` from Iconify.
+   - Fallback to generic icons if specific brand is missing.
 
-5. **Ordering**
-   - Order categories logically (Frontend → Backend → Database → DevOps → Tools)
-   - Within categories, order by relevance or proficiency
-
-6. **Save Location**
-   - Save to `src/content/stack.md` or appropriate location
-   - Can also update existing tech stack page
+4. **Update File**
+   - Append to the `stack` array in `src/data/stack.ts`

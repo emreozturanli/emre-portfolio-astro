@@ -1,147 +1,131 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import { stack, type TechCategory } from '@/data/stack';
 
-const stackItems = await getCollection('stack');
-
-// Group by category
-const categories = ['frontend', 'backend', 'database', 'devops', 'tools', 'languages'] as const;
-const groupedStack = categories.reduce(
-	(acc, category) => {
-		const items = stackItems
-			.filter((item) => item.data.category === category)
-			.sort((a, b) => a.data.order - b.data.order);
-		if (items.length > 0) {
-			acc[category] = items;
-		}
-		return acc;
-	},
-	{} as Record<string, typeof stackItems>
-);
-
-const categoryLabels: Record<string, string> = {
-	frontend: 'Frontend',
-	backend: 'Backend',
-	database: 'Database',
-	devops: 'DevOps & Cloud',
-	tools: 'Tools',
-	languages: 'Languages',
+const categories: TechCategory[] = [
+  'languages',
+  'frontend',
+  'backend',
+  'testing',
+  'devops',
+  'tools',
+];
+const categoryLabels: Record<TechCategory, string> = {
+  languages: 'Languages',
+  frontend: 'Frontend',
+  backend: 'Backend',
+  testing: 'Testing',
+  devops: 'DevOps & Cloud',
+  tools: 'Tools',
 };
 ---
 
-<BaseLayout title='Stack | Emre' description='Technologies I use.'>
-	<div class='container'>
-		<header class='page-header'>
-			<h1>Tech Stack</h1>
-			<p class='page-description'>Tools and technologies I work with.</p>
-		</header>
+<BaseLayout title="Tech Stack | Emre" description="Tools and technologies I use.">
+  <div class="container">
+    <header class="page-header">
+      <h1>Tech Stack</h1>
+      <p class="page-description">The tools and technologies I use to build digital products.</p>
+    </header>
 
-		{
-			Object.keys(groupedStack).length > 0 ? (
-				<div class='stack-grid'>
-					{Object.entries(groupedStack).map(([category, items]) => (
-						<section class='stack-section'>
-							<h2>{categoryLabels[category]}</h2>
-							<ul class='stack-list'>
-								{items.map((item) => (
-									<li class='stack-item'>
-										{item.data.icon && <span class='stack-icon'>{item.data.icon}</span>}
-										<div class='stack-content'>
-											{item.data.url ? (
-												<a
-													href={item.data.url}
-													target='_blank'
-													rel='noopener noreferrer'
-													class='stack-name'>
-													{item.data.name}
-												</a>
-											) : (
-												<span class='stack-name'>{item.data.name}</span>
-											)}
-											{item.data.description && <p class='stack-desc'>{item.data.description}</p>}
-										</div>
-									</li>
-								))}
-							</ul>
-						</section>
-					))}
-				</div>
-			) : (
-				<p class='empty'>No tech stack entries yet.</p>
-			)
-		}
-	</div>
+    <div class="stack-grid">
+      {
+        categories.map((category) => {
+          const items = stack.filter((item) => item.category === category);
+          if (items.length === 0) return null;
+
+          return (
+            <section class="stack-category">
+              <h2 class="category-title">{categoryLabels[category]}</h2>
+              <ul class="category-list">
+                {items.map((item) => (
+                  <li class="stack-item">
+                    <div class="icon-box">
+                      <Icon name={item.icon} class="icon" />
+                    </div>
+                    <span class="name">{item.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        })
+      }
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
-	.page-header {
-		margin-bottom: var(--space-2xl);
-	}
+  .page-header {
+    margin-bottom: var(--space-2xl);
+  }
 
-	.page-header h1 {
-		margin-bottom: var(--space-xs);
-	}
+  .page-header h1 {
+    margin-bottom: var(--space-xs);
+  }
 
-	.page-description {
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
+  .page-description {
+    color: var(--color-text-secondary);
+  }
 
-	.stack-grid {
-		display: grid;
-		gap: var(--space-2xl);
-	}
+  .stack-grid {
+    display: grid;
+    gap: var(--space-2xl);
+  }
 
-	.stack-section h2 {
-		font-size: var(--font-size-lg);
-		margin-bottom: var(--space-md);
-		padding-bottom: var(--space-sm);
-		border-bottom: 1px solid var(--color-border);
-	}
+  .category-title {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--color-border);
+  }
 
-	.stack-list {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		gap: var(--space-sm);
-	}
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-md);
+  }
 
-	.stack-item {
-		display: flex;
-		align-items: flex-start;
-		gap: var(--space-sm);
-		padding: var(--space-sm);
-		border-radius: var(--radius-sm);
-		transition: background var(--transition-fast);
-	}
+  .stack-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-secondary);
+    transition: all var(--transition-normal);
+    border: 1px solid transparent;
+  }
 
-	.stack-item:hover {
-		background: var(--color-bg-secondary);
-	}
+  .stack-item:hover {
+    transform: translateY(-2px);
+    background: var(--color-bg);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
 
-	.stack-icon {
-		font-size: 1.2em;
-	}
+  .icon-box {
+    font-size: 2.5rem;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform var(--transition-normal);
+  }
 
-	.stack-name {
-		font-weight: 500;
-	}
+  .stack-item:hover .icon-box {
+    transform: scale(1.1);
+    color: var(--color-accent);
+  }
 
-	a.stack-name:hover {
-		color: var(--color-accent);
-	}
-
-	.stack-desc {
-		font-size: var(--font-size-sm);
-		color: var(--color-text-secondary);
-		margin: 0;
-		margin-top: var(--space-xs);
-	}
-
-	.empty {
-		color: var(--color-text-muted);
-		text-align: center;
-		padding: var(--space-3xl);
-	}
+  .name {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+  }
 </style>

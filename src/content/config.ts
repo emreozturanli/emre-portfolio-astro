@@ -51,22 +51,9 @@ const books = defineCollection({
   }),
 });
 
-const stack = defineCollection({
-  type: 'content',
-  schema: z.object({
-    name: z.string(),
-    category: z.enum(['frontend', 'backend', 'database', 'devops', 'tools', 'languages']),
-    description: z.string().optional(),
-    url: z.string().url().optional(),
-    icon: z.string().optional(),
-    order: z.number().default(0),
-  }),
-});
-
 export const collections = {
   blog,
   travel,
   projects,
   books,
-  stack,
 };
