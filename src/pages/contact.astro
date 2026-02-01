@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+
+const contacts = [
+  {
+    icon: 'fa6-brands:github',
+    label: 'GitHub',
+    value: 'github.com/emre',
+    href: 'https://github.com/emre',
+    color: '#333',
+  },
+  {
+    icon: 'fa6-brands:linkedin',
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/emre',
+    href: 'https://linkedin.com/in/emre',
+    color: '#0077b5',
+  },
+  {
+    icon: 'fa6-solid:envelope',
+    label: 'Email',
+    value: 'hello@emre.dev',
+    href: 'mailto:hello@emre.dev',
+    color: '#ea4335',
+  },
+  {
+    icon: 'fa6-solid:mobile-screen',
+    label: 'Mobile',
+    value: '+1 (555) 123-4567',
+    href: 'tel:+15551234567',
+    color: '#34a853',
+  },
+];
+---
+
+<BaseLayout title="Contact | Emre" description="Get in touch.">
+  <div class="container">
+    <header class="page-header">
+      <h1>Let's Connect</h1>
+      <p class="page-description">
+        I'm always open to discussing new projects, creative ideas, or opportunities to be part of
+        your visions.
+      </p>
+    </header>
+
+    <div class="contact-grid">
+      {
+        contacts.map((contact) => (
+          <a href={contact.href} target="_blank" rel="noopener noreferrer" class="contact-card">
+            <div class="icon-wrapper" style={`--icon-color: ${contact.color}`}>
+              <Icon name={contact.icon} class="icon" />
+            </div>
+            <div class="info">
+              <h2>{contact.label}</h2>
+              <p>{contact.value}</p>
+            </div>
+            <Icon name="fa6-solid:arrow-up-right-from-square" class="external-icon" />
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-3xl);
+    max-width: 600px;
+  }
+
+  .page-header h1 {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--space-md);
+    background: linear-gradient(120deg, var(--color-text), var(--color-text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  .page-description {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .contact-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-xl);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-normal);
+    overflow: hidden;
+  }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5));
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+  }
+
+  .contact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-dark);
+  }
+
+  /* Icon styles */
+  .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-full);
+    background: var(--color-bg-secondary);
+    color: var(--icon-color);
+    font-size: 2rem;
+    transition: transform var(--transition-normal);
+  }
+
+  .contact-card:hover .icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+    background: color-mix(in srgb, var(--icon-color) 10%, var(--color-bg-secondary));
+  }
+
+  .info h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-xs);
+    color: var(--color-text);
+  }
+
+  .info p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .external-icon {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: all var(--transition-normal);
+  }
+
+  .contact-card:hover .external-icon {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  /* Dark mode adjustments */
+  @media (prefers-color-scheme: dark) {
+    .contact-card:hover {
+      background: var(--color-bg-secondary);
+      border-color: var(--color-border-dark);
+    }
+
+    .contact-card:hover .icon-wrapper {
+      background: color-mix(in srgb, var(--icon-color) 20%, var(--color-bg-secondary));
+    }
+  }
+
+  /* Animations for page load */
+  .contact-card {
+    animation: fade-up 0.6s ease-out backwards;
+  }
+
+  .contact-card:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  .contact-card:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .contact-card:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  .contact-card:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

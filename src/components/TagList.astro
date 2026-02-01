@@ -1,0 +1,50 @@
+---
+interface Props {
+  tags: string[];
+  linkBase?: string;
+}
+
+const { tags, linkBase } = Astro.props;
+---
+
+<ul class="tag-list">
+  {
+    tags.map((tag) => (
+      <li>
+        {linkBase ? (
+          <a href={`${linkBase}/${tag}`} class="tag">
+            {tag}
+          </a>
+        ) : (
+          <span class="tag">{tag}</span>
+        )}
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.2em 0.6em;
+    font-size: var(--font-size-xs);
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    transition: all var(--transition-fast);
+  }
+
+  a.tag:hover {
+    background: var(--color-accent);
+    color: white;
+  }
+</style>

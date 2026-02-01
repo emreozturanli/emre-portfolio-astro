@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const books = (await getCollection('books')).sort(
+  (a, b) => (b.data.dateRead?.valueOf() ?? 0) - (a.data.dateRead?.valueOf() ?? 0)
+);
+---
+
+<BaseLayout title="Books | Emre" description="Notes from books I've read.">
+  <div class="container">
+    <header class="page-header">
+      <h1>Book Notes</h1>
+      <p class="page-description">Highlights and thoughts from books I've read.</p>
+    </header>
+
+    {
+      books.length > 0 ? (
+        <ul class="book-list">
+          {books.map((book) => (
+            <li class="book-card">
+              {book.data.cover && (
+                <img src={book.data.cover} alt={book.data.title} class="book-cover" />
+              )}
+              <div class="book-content">
+                <h2>{book.data.title}</h2>
+                <p class="author">by {book.data.author}</p>
+                {book.data.rating && (
+                  <p class="rating">
+                    {'★'.repeat(book.data.rating)}
+                    {'☆'.repeat(5 - book.data.rating)}
+                  </p>
+                )}
+                {book.data.tags.length > 0 && (
+                  <div class="book-tags">
+                    {book.data.tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty">No book notes yet. Currently reading!</p>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .page-header h1 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .page-description {
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .book-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .book-card {
+    display: flex;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .book-cover {
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .book-content h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-xs);
+  }
+
+  .author {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-xs);
+  }
+
+  .rating {
+    color: var(--color-accent);
+    margin-bottom: var(--space-sm);
+  }
+
+  .book-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .tag {
+    font-size: var(--font-size-xs);
+    padding: 0.2em 0.6em;
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+  }
+
+  .empty {
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: var(--space-3xl);
+  }
+
+  @media (max-width: 480px) {
+    .book-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+</style>

@@ -1,0 +1,102 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagList from '../../components/TagList.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const travels = await getCollection('travel');
+  return travels.map((travel) => ({
+    params: { slug: travel.slug },
+    props: travel,
+  }));
+}
+
+const travel = Astro.props;
+const { Content } = await travel.render();
+
+const formattedDate = travel.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+});
+---
+
+<BaseLayout title={`${travel.data.title} | Travel`} description={travel.data.description}>
+  <article class="container">
+    <header class="travel-header">
+      <a href="/travel" class="back-link">← Back to Travel</a>
+      <h1>{travel.data.title}</h1>
+      <div class="travel-meta">
+        <span class="location"
+          >{travel.data.city ? `${travel.data.city}, ` : ''}{travel.data.country}</span
+        >
+        <time datetime={travel.data.date.toISOString()}>{formattedDate}</time>
+      </div>
+      {travel.data.tags.length > 0 && <TagList tags={travel.data.tags} />}
+    </header>
+
+    {
+      travel.data.images.length > 0 && (
+        <div class="gallery">
+          {travel.data.images.map((image) => (
+            <img src={image} alt={travel.data.title} loading="lazy" />
+          ))}
+        </div>
+      )
+    }
+
+    <div class="content">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .travel-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-lg);
+  }
+
+  .back-link:hover {
+    color: var(--color-accent);
+  }
+
+  .travel-header h1 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .travel-meta {
+    display: flex;
+    gap: var(--space-md);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .location {
+    font-weight: 500;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .gallery img {
+    border-radius: var(--radius-md);
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+  }
+
+  .content {
+    line-height: var(--line-height-relaxed);
+  }
+</style>
