@@ -1,261 +1,260 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const recentPosts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 
 const featuredProjects = (await getCollection('projects'))
-  .filter((p) => p.data.featured)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+	.filter((p) => p.data.featured)
+	.sort((a, b) => a.data.order - b.data.order)
+	.slice(0, 3);
 ---
 
 <BaseLayout
-  title="Emre | Home"
-  description="Personal website - Developer, traveler, and lifelong learner."
->
-  <div class="container">
-    <!-- Hero Section -->
-    <section class="hero">
-      <h1 class="hero-title">
-        Hey, I'm <span class="accent">Emre</span> 👋
-      </h1>
-      <p class="hero-subtitle">
-        Developer by day, curious mind always. I build things, explore places, and read books.
-      </p>
-      <nav class="hero-nav">
-        <a href="/blog" class="nav-item">
-          <span class="nav-icon">✍️</span>
-          <span>Blog</span>
-        </a>
-        <a href="/projects" class="nav-item">
-          <span class="nav-icon">🚀</span>
-          <span>Projects</span>
-        </a>
-        <a href="/travel" class="nav-item">
-          <span class="nav-icon">🌍</span>
-          <span>Travel</span>
-        </a>
-        <a href="/books" class="nav-item">
-          <span class="nav-icon">📚</span>
-          <span>Books</span>
-        </a>
-        <a href="/stack" class="nav-item">
-          <span class="nav-icon">⚡</span>
-          <span>Stack</span>
-        </a>
-      </nav>
-    </section>
+	title='Emre | Home'
+	description='Personal website - Developer, traveler, and lifelong learner.'>
+	<div class='container'>
+		<!-- Hero Section -->
+		<section class='hero'>
+			<h1 class='hero-title'>
+				Hey, I'm <span class='accent'>Emre</span> 👋
+			</h1>
+			<p class='hero-subtitle'>
+				Developer by day, curious mind always. I build things, explore places, and read books.
+			</p>
+			<nav class='hero-nav'>
+				<a href='/blog' class='nav-item'>
+					<span class='nav-icon'>✍️</span>
+					<span>Blog</span>
+				</a>
+				<a href='/projects' class='nav-item'>
+					<span class='nav-icon'>🚀</span>
+					<span>Projects</span>
+				</a>
+				<a href='/travel' class='nav-item'>
+					<span class='nav-icon'>🌍</span>
+					<span>Travel</span>
+				</a>
+				<a href='/books' class='nav-item'>
+					<span class='nav-icon'>📚</span>
+					<span>Books</span>
+				</a>
+				<a href='/stack' class='nav-item'>
+					<span class='nav-icon'>⚡</span>
+					<span>Stack</span>
+				</a>
+			</nav>
+		</section>
 
-    <!-- Recent Posts -->
-    {
-      recentPosts.length > 0 && (
-        <section class="section">
-          <div class="section-header">
-            <h2>Recent Posts</h2>
-            <a href="/blog" class="see-all">
-              See all →
-            </a>
-          </div>
-          <ul class="post-list">
-            {recentPosts.map((post) => (
-              <li>
-                <a href={`/blog/${post.slug}`} class="post-link">
-                  <span class="post-title">{post.data.title}</span>
-                  <span class="post-date">
-                    {post.data.pubDate.toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
+		<!-- Recent Posts -->
+		{
+			recentPosts.length > 0 && (
+				<section class='section'>
+					<div class='section-header'>
+						<h2>Recent Posts</h2>
+						<a href='/blog' class='see-all'>
+							See all →
+						</a>
+					</div>
+					<ul class='post-list'>
+						{recentPosts.map((post) => (
+							<li>
+								<a href={`/blog/${post.slug}`} class='post-link'>
+									<span class='post-title'>{post.data.title}</span>
+									<span class='post-date'>
+										{post.data.pubDate.toLocaleDateString('en-US', {
+											month: 'short',
+											day: 'numeric',
+										})}
+									</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			)
+		}
 
-    <!-- Featured Projects -->
-    {
-      featuredProjects.length > 0 && (
-        <section class="section">
-          <div class="section-header">
-            <h2>Featured Projects</h2>
-            <a href="/projects" class="see-all">
-              See all →
-            </a>
-          </div>
-          <ul class="project-list">
-            {featuredProjects.map((project) => (
-              <li class="project-item">
-                <h3>{project.data.title}</h3>
-                <p>{project.data.description}</p>
-                <div class="project-stack">
-                  {project.data.techStack.slice(0, 4).map((tech) => (
-                    <span class="tech-tag">{tech}</span>
-                  ))}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
-  </div>
+		<!-- Featured Projects -->
+		{
+			featuredProjects.length > 0 && (
+				<section class='section'>
+					<div class='section-header'>
+						<h2>Featured Projects</h2>
+						<a href='/projects' class='see-all'>
+							See all →
+						</a>
+					</div>
+					<ul class='project-list'>
+						{featuredProjects.map((project) => (
+							<li class='project-item'>
+								<h3>{project.data.title}</h3>
+								<p>{project.data.description}</p>
+								<div class='project-stack'>
+									{project.data.techStack.slice(0, 4).map((tech) => (
+										<span class='tech-tag'>{tech}</span>
+									))}
+								</div>
+							</li>
+						))}
+					</ul>
+				</section>
+			)
+		}
+	</div>
 </BaseLayout>
 
 <style>
-  /* Hero */
-  .hero {
-    padding: var(--space-3xl) 0;
-    text-align: center;
-  }
+	/* Hero */
+	.hero {
+		padding: var(--space-3xl) 0;
+		text-align: center;
+	}
 
-  .hero-title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
-    margin-bottom: var(--space-md);
-  }
+	.hero-title {
+		font-size: clamp(2rem, 5vw, 3rem);
+		font-weight: 700;
+		margin-bottom: var(--space-md);
+	}
 
-  .accent {
-    color: var(--color-accent);
-  }
+	.accent {
+		color: var(--color-accent);
+	}
 
-  .hero-subtitle {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-secondary);
-    max-width: 500px;
-    margin: 0 auto var(--space-xl);
-    line-height: var(--line-height-relaxed);
-  }
+	.hero-subtitle {
+		font-size: var(--font-size-lg);
+		color: var(--color-text-secondary);
+		max-width: 500px;
+		margin: 0 auto var(--space-xl);
+		line-height: var(--line-height-relaxed);
+	}
 
-  .hero-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: var(--space-md);
-  }
+	.hero-nav {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: var(--space-md);
+	}
 
-  .nav-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    padding: var(--space-sm) var(--space-md);
-    background: var(--color-bg-secondary);
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-sm);
-    color: var(--color-text);
-    transition: all var(--transition-fast);
-  }
+	.nav-item {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+		padding: var(--space-sm) var(--space-md);
+		background: var(--color-bg-secondary);
+		border-radius: var(--radius-md);
+		font-size: var(--font-size-sm);
+		color: var(--color-text);
+		transition: all var(--transition-fast);
+	}
 
-  .nav-item:hover {
-    background: var(--color-accent);
-    color: white;
-  }
+	.nav-item:hover {
+		background: var(--color-accent);
+		color: white;
+	}
 
-  .nav-icon {
-    font-size: 1.2em;
-  }
+	.nav-icon {
+		font-size: 1.2em;
+	}
 
-  /* Sections */
-  .section {
-    margin-bottom: var(--space-3xl);
-  }
+	/* Sections */
+	.section {
+		margin-bottom: var(--space-3xl);
+	}
 
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: var(--space-lg);
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--color-border);
-  }
+	.section-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		margin-bottom: var(--space-lg);
+		padding-bottom: var(--space-sm);
+		border-bottom: 1px solid var(--color-border);
+	}
 
-  .section-header h2 {
-    font-size: var(--font-size-xl);
-  }
+	.section-header h2 {
+		font-size: var(--font-size-xl);
+	}
 
-  .see-all {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-  }
+	.see-all {
+		font-size: var(--font-size-sm);
+		color: var(--color-text-secondary);
+	}
 
-  .see-all:hover {
-    color: var(--color-accent);
-  }
+	.see-all:hover {
+		color: var(--color-accent);
+	}
 
-  /* Post List */
-  .post-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
+	/* Post List */
+	.post-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
 
-  .post-list li {
-    margin-bottom: 0;
-  }
+	.post-list li {
+		margin-bottom: 0;
+	}
 
-  .post-link {
-    display: flex;
-    justify-content: space-between;
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid var(--color-border);
-  }
+	.post-link {
+		display: flex;
+		justify-content: space-between;
+		padding: var(--space-sm) 0;
+		border-bottom: 1px solid var(--color-border);
+	}
 
-  .post-link:hover .post-title {
-    color: var(--color-accent);
-  }
+	.post-link:hover .post-title {
+		color: var(--color-accent);
+	}
 
-  .post-title {
-    transition: color var(--transition-fast);
-  }
+	.post-title {
+		transition: color var(--transition-fast);
+	}
 
-  .post-date {
-    color: var(--color-text-muted);
-    font-size: var(--font-size-sm);
-  }
+	.post-date {
+		color: var(--color-text-muted);
+		font-size: var(--font-size-sm);
+	}
 
-  /* Project List */
-  .project-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: var(--space-md);
-  }
+	/* Project List */
+	.project-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: var(--space-md);
+	}
 
-  .project-item {
-    padding: var(--space-lg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-  }
+	.project-item {
+		padding: var(--space-lg);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+	}
 
-  .project-item h3 {
-    font-size: var(--font-size-base);
-    margin-bottom: var(--space-xs);
-  }
+	.project-item h3 {
+		font-size: var(--font-size-base);
+		margin-bottom: var(--space-xs);
+	}
 
-  .project-item p {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-    margin-bottom: var(--space-sm);
-  }
+	.project-item p {
+		font-size: var(--font-size-sm);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-sm);
+	}
 
-  .project-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
-  }
+	.project-stack {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+	}
 
-  .tech-tag {
-    font-size: var(--font-size-xs);
-    padding: 0.15em 0.5em;
-    background: var(--color-bg-secondary);
-    border-radius: var(--radius-sm);
-    color: var(--color-text-muted);
-  }
+	.tech-tag {
+		font-size: var(--font-size-xs);
+		padding: 0.15em 0.5em;
+		background: var(--color-bg-secondary);
+		border-radius: var(--radius-sm);
+		color: var(--color-text-muted);
+	}
 </style>

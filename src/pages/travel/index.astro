@@ -1,78 +1,78 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Card from '../../components/Card.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Card from '@/components/Card.astro';
 import { getCollection } from 'astro:content';
 
 const travels = (await getCollection('travel')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 
 // Group by country
 const byCountry = travels.reduce(
-  (acc, travel) => {
-    const country = travel.data.country;
-    if (!acc[country]) acc[country] = [];
-    acc[country].push(travel);
-    return acc;
-  },
-  {} as Record<string, typeof travels>
+	(acc, travel) => {
+		const country = travel.data.country;
+		if (!acc[country]) acc[country] = [];
+		acc[country].push(travel);
+		return acc;
+	},
+	{} as Record<string, typeof travels>
 );
 ---
 
-<BaseLayout title="Travel | Emre" description="Places I've been.">
-  <div class="container">
-    <header class="page-header">
-      <h1>Travel</h1>
-      <p class="page-description">Places I've explored and memories made.</p>
-    </header>
+<BaseLayout title='Travel | Emre' description="Places I've been.">
+	<div class='container'>
+		<header class='page-header'>
+			<h1>Travel</h1>
+			<p class='page-description'>Places I've explored and memories made.</p>
+		</header>
 
-    {
-      travels.length > 0 ? (
-        <ul class="travel-list">
-          {travels.map((travel) => (
-            <li>
-              <Card
-                href={`/travel/${travel.slug}`}
-                title={travel.data.title}
-                description={travel.data.description}
-                date={travel.data.date}
-                tags={[travel.data.country, travel.data.city].filter(Boolean) as string[]}
-              />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p class="empty">No travel entries yet. Adventures coming soon!</p>
-      )
-    }
-  </div>
+		{
+			travels.length > 0 ? (
+				<ul class='travel-list'>
+					{travels.map((travel) => (
+						<li>
+							<Card
+								href={`/travel/${travel.slug}`}
+								title={travel.data.title}
+								description={travel.data.description}
+								date={travel.data.date}
+								tags={[travel.data.country, travel.data.city].filter(Boolean) as string[]}
+							/>
+						</li>
+					))}
+				</ul>
+			) : (
+				<p class='empty'>No travel entries yet. Adventures coming soon!</p>
+			)
+		}
+	</div>
 </BaseLayout>
 
 <style>
-  .page-header {
-    margin-bottom: var(--space-2xl);
-  }
+	.page-header {
+		margin-bottom: var(--space-2xl);
+	}
 
-  .page-header h1 {
-    margin-bottom: var(--space-xs);
-  }
+	.page-header h1 {
+		margin-bottom: var(--space-xs);
+	}
 
-  .page-description {
-    color: var(--color-text-secondary);
-    margin: 0;
-  }
+	.page-description {
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
 
-  .travel-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: var(--space-md);
-  }
+	.travel-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: var(--space-md);
+	}
 
-  .empty {
-    color: var(--color-text-muted);
-    text-align: center;
-    padding: var(--space-3xl);
-  }
+	.empty {
+		color: var(--color-text-muted);
+		text-align: center;
+		padding: var(--space-3xl);
+	}
 </style>
