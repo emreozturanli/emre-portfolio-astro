@@ -26,4 +26,10 @@ export default [
       'astro/no-set-html-directive': 'warn',
     },
   },
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: tsparser,
+    },
+  },
 ];
