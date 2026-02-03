@@ -10,5 +10,6 @@ export default defineConfig({
   build: {
     format: 'file',
   },
+  prefetch: true,
   integrations: [icon(), sitemap()],
 });
