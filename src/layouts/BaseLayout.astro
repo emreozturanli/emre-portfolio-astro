@@ -5,40 +5,43 @@ import Footer from '@/components/Footer.astro';
 import '@/styles/global.css';
 
 interface Props {
-	title: string;
-	description?: string;
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
 }
 
-const { title, description } = Astro.props;
+const { title, description, image, type } = Astro.props;
 ---
 
 <!doctype html>
-<html lang='en'>
-	<head>
-		<BaseHead title={title} description={description} />
-	</head>
-	<body>
-		<Header />
-		<main class='main'>
-			<slot />
-		</main>
-		<Footer />
-	</body>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={image} type={type} />
+  </head>
+
+  <body>
+    <Header />
+    <main class="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		min-height: 100vh;
-	}
+  html,
+  body {
+    min-height: 100vh;
+  }
 
-	body {
-		display: flex;
-		flex-direction: column;
-	}
+  body {
+    display: flex;
+    flex-direction: column;
+  }
 
-	.main {
-		flex: 1;
-		padding: var(--space-2xl) 0;
-	}
+  .main {
+    flex: 1;
+    padding: var(--space-2xl) 0;
+  }
 </style>
