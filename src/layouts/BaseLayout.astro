@@ -21,11 +21,11 @@ const { title, description, image, type } = Astro.props;
   </head>
 
   <body>
-    <Header />
-    <main class="main">
+    <Header transition:name="header" />
+    <main class="main" transition:animate="fade">
       <slot />
     </main>
-    <Footer />
+    <Footer transition:name="footer" />
   </body>
 </html>
 
