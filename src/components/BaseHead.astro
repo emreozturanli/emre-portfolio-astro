@@ -11,7 +11,7 @@ interface Props {
 const {
   title,
   description = 'Personal website',
-  image = '/og-image.jpeg',
+  image = '/og-image.png',
   type = 'website',
 } = Astro.props;
 
@@ -73,6 +73,25 @@ const schema = {
 />
 
 <!-- JSON-LD -->
-<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+<!-- Google tag (gtag.js) -->
+<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-CK401W2J36"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', 'G-CK401W2J36');
+
+  // Track page views on Astro transitions
+  document.addEventListener('astro:page-load', () => {
+    gtag('config', 'G-CK401W2J36', {
+      page_path: window.location.pathname,
+    });
+  });
+</script>
 
 <ClientRouter />
