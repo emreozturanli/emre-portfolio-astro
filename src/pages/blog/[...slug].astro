@@ -21,7 +21,11 @@ const formattedDate = post.data.pubDate.toLocaleDateString('en-US', {
 });
 ---
 
-<BaseLayout title={`${post.data.title} | Blog`} description={post.data.description} type="article">
+<BaseLayout
+  title={`${post.data.title} | Blog`}
+  description={post.data.description + ' - Emre Özturanlı'}
+  type="article"
+>
   <article class="container">
     <header class="post-header">
       <a href="/blog" class="back-link">← Back to Blog</a>

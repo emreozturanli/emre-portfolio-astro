@@ -4,64 +4,67 @@ import Card from '@/components/Card.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog'))
-	.filter((post) => !post.data.draft)
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout title='Blog | Emre' description='Thoughts on development, tech, and life.'>
-	<div class='container'>
-		<header class='page-header'>
-			<h1>Blog</h1>
-			<p class='page-description'>Thoughts and learnings along the way.</p>
-		</header>
+<BaseLayout
+  title="Blog | Emre"
+  description="Thoughts on development, tech, and life - Emre Özturanlı"
+>
+  <div class="container">
+    <header class="page-header">
+      <h1>Blog</h1>
+      <p class="page-description">Thoughts and learnings along the way.</p>
+    </header>
 
-		{
-			posts.length > 0 ? (
-				<ul class='post-list'>
-					{posts.map((post) => (
-						<li>
-							<Card
-								href={`/blog/${post.slug}`}
-								title={post.data.title}
-								description={post.data.description}
-								date={post.data.pubDate}
-								tags={post.data.tags}
-							/>
-						</li>
-					))}
-				</ul>
-			) : (
-				<p class='empty'>No posts yet. Check back soon!</p>
-			)
-		}
-	</div>
+    {
+      posts.length > 0 ? (
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li>
+              <Card
+                href={`/blog/${post.slug}`}
+                title={post.data.title}
+                description={post.data.description}
+                date={post.data.pubDate}
+                tags={post.data.tags}
+              />
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty">No posts yet. Check back soon!</p>
+      )
+    }
+  </div>
 </BaseLayout>
 
 <style>
-	.page-header {
-		margin-bottom: var(--space-2xl);
-	}
+  .page-header {
+    margin-bottom: var(--space-2xl);
+  }
 
-	.page-header h1 {
-		margin-bottom: var(--space-xs);
-	}
+  .page-header h1 {
+    margin-bottom: var(--space-xs);
+  }
 
-	.page-description {
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
+  .page-description {
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
 
-	.post-list {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		gap: var(--space-md);
-	}
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-md);
+  }
 
-	.empty {
-		color: var(--color-text-muted);
-		text-align: center;
-		padding: var(--space-3xl);
-	}
+  .empty {
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: var(--space-3xl);
+  }
 </style>

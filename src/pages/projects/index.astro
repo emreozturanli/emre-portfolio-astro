@@ -5,146 +5,148 @@ import { getCollection } from 'astro:content';
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title='Projects | Emre' description="Things I've built.">
-	<div class='container'>
-		<header class='page-header'>
-			<h1>Projects</h1>
-			<p class='page-description'>Things I've built and worked on.</p>
-		</header>
+<BaseLayout title="Projects | Emre" description="Things I've built - Emre Özturanlı">
+  <div class="container">
+    <header class="page-header">
+      <h1>Projects</h1>
+      <p class="page-description">Things I've built and worked on.</p>
+    </header>
 
-		{
-			projects.length > 0 ? (
-				<ul class='project-list'>
-					{projects.map((project) => (
-						<li class='project-card'>
-							<div class='project-content'>
-								<h2>{project.data.title}</h2>
-								<p>{project.data.description}</p>
-								<div class='project-stack'>
-									{project.data.techStack.map((tech) => (
-										<span class='tech-tag'>{tech}</span>
-									))}
-								</div>
-							</div>
-							<div class='project-links'>
-								{project.data.url && (
-									<a
-										href={project.data.url}
-										target='_blank'
-										rel='noopener noreferrer'
-										class='project-link'>
-										Visit →
-									</a>
-								)}
-								{project.data.repo && (
-									<a
-										href={project.data.repo}
-										target='_blank'
-										rel='noopener noreferrer'
-										class='project-link secondary'>
-										Source
-									</a>
-								)}
-							</div>
-						</li>
-					))}
-				</ul>
-			) : (
-				<p class='empty'>No projects yet. Check back soon!</p>
-			)
-		}
-	</div>
+    {
+      projects.length > 0 ? (
+        <ul class="project-list">
+          {projects.map((project) => (
+            <li class="project-card">
+              <div class="project-content">
+                <h2>{project.data.title}</h2>
+                <p>{project.data.description}</p>
+                <div class="project-stack">
+                  {project.data.techStack.map((tech) => (
+                    <span class="tech-tag">{tech}</span>
+                  ))}
+                </div>
+              </div>
+              <div class="project-links">
+                {project.data.url && (
+                  <a
+                    href={project.data.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link"
+                  >
+                    Visit →
+                  </a>
+                )}
+                {project.data.repo && (
+                  <a
+                    href={project.data.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link secondary"
+                  >
+                    Source
+                  </a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="empty">No projects yet. Check back soon!</p>
+      )
+    }
+  </div>
 </BaseLayout>
 
 <style>
-	.page-header {
-		margin-bottom: var(--space-2xl);
-	}
+  .page-header {
+    margin-bottom: var(--space-2xl);
+  }
 
-	.page-header h1 {
-		margin-bottom: var(--space-xs);
-	}
+  .page-header h1 {
+    margin-bottom: var(--space-xs);
+  }
 
-	.page-description {
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
+  .page-description {
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
 
-	.project-list {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		gap: var(--space-lg);
-	}
+  .project-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-lg);
+  }
 
-	.project-card {
-		padding: var(--space-lg);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-md);
-	}
+  .project-card {
+    padding: var(--space-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
 
-	.project-content h2 {
-		font-size: var(--font-size-lg);
-		margin-bottom: var(--space-xs);
-	}
+  .project-content h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-xs);
+  }
 
-	.project-content p {
-		color: var(--color-text-secondary);
-		font-size: var(--font-size-sm);
-		margin-bottom: var(--space-md);
-	}
+  .project-content p {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-md);
+  }
 
-	.project-stack {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-xs);
-	}
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
 
-	.tech-tag {
-		font-size: var(--font-size-xs);
-		padding: 0.2em 0.6em;
-		background: var(--color-bg-secondary);
-		border-radius: var(--radius-sm);
-		color: var(--color-text-muted);
-	}
+  .tech-tag {
+    font-size: var(--font-size-xs);
+    padding: 0.2em 0.6em;
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+  }
 
-	.project-links {
-		display: flex;
-		gap: var(--space-sm);
-	}
+  .project-links {
+    display: flex;
+    gap: var(--space-sm);
+  }
 
-	.project-link {
-		font-size: var(--font-size-sm);
-		padding: var(--space-xs) var(--space-md);
-		background: var(--color-text);
-		color: var(--color-bg);
-		border-radius: var(--radius-sm);
-		transition: all var(--transition-fast);
-	}
+  .project-link {
+    font-size: var(--font-size-sm);
+    padding: var(--space-xs) var(--space-md);
+    background: var(--color-text);
+    color: var(--color-bg);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+  }
 
-	.project-link:hover {
-		background: var(--color-accent);
-		color: white;
-	}
+  .project-link:hover {
+    background: var(--color-accent);
+    color: white;
+  }
 
-	.project-link.secondary {
-		background: transparent;
-		border: 1px solid var(--color-border);
-		color: var(--color-text);
-	}
+  .project-link.secondary {
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
 
-	.project-link.secondary:hover {
-		border-color: var(--color-accent);
-		color: var(--color-accent);
-	}
+  .project-link.secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
 
-	.empty {
-		color: var(--color-text-muted);
-		text-align: center;
-		padding: var(--space-3xl);
-	}
+  .empty {
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: var(--space-3xl);
+  }
 </style>
