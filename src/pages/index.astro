@@ -27,23 +27,23 @@ const featuredProjects = (await getCollection('projects'))
         Developer by day, curious mind always. I build things, explore places, and read books.
       </p>
       <nav class="hero-nav">
-        <a href="/blog" class="nav-item">
+        <a href="/blog/" class="nav-item">
           <span class="nav-icon">✍️</span>
           <span>Blog</span>
         </a>
-        <a href="/projects" class="nav-item">
+        <a href="/projects/" class="nav-item">
           <span class="nav-icon">🚀</span>
           <span>Projects</span>
         </a>
-        <a href="/travel" class="nav-item">
+        <a href="/travel/" class="nav-item">
           <span class="nav-icon">🌍</span>
           <span>Travel</span>
         </a>
-        <a href="/books" class="nav-item">
+        <a href="/books/" class="nav-item">
           <span class="nav-icon">📚</span>
           <span>Books</span>
         </a>
-        <a href="/stack" class="nav-item">
+        <a href="/stack/" class="nav-item">
           <span class="nav-icon">⚡</span>
           <span>Stack</span>
         </a>
@@ -56,14 +56,14 @@ const featuredProjects = (await getCollection('projects'))
         <section class="section">
           <div class="section-header">
             <h2>Recent Posts</h2>
-            <a href="/blog" class="see-all">
+            <a href="/blog/" class="see-all">
               See all →
             </a>
           </div>
           <ul class="post-list">
             {recentPosts.map((post) => (
               <li>
-                <a href={`/blog/${post.slug}`} class="post-link">
+                <a href={`/blog/${post.slug}/`} class="post-link">
                   <span class="post-title">{post.data.title}</span>
                   <span class="post-date">
                     {post.data.pubDate.toLocaleDateString('en-US', {
@@ -85,7 +85,7 @@ const featuredProjects = (await getCollection('projects'))
         <section class="section">
           <div class="section-header">
             <h2>Featured Projects</h2>
-            <a href="/projects" class="see-all">
+            <a href="/projects/" class="see-all">
               See all →
             </a>
           </div>
