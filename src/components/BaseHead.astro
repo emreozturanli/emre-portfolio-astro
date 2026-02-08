@@ -26,11 +26,13 @@ const schema = {
   name: title,
   description: description,
   url: canonicalURL,
-  ...(image && { image: new URL(image, Astro.site || 'https://emreozturanli.com').href }),
+  ...(image && {
+    image: new URL(image, Astro.site || 'https://www.emreozturanli.com').href,
+  }),
   author: {
     '@type': 'Person',
     name: 'Emre Ozturanli',
-    url: 'https://emreozturanli.com',
+    url: 'https://www.emreozturanli.com',
   },
 };
 ---
@@ -62,7 +64,10 @@ const schema = {
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.site || 'https://emreozturanli.com')} />
+<meta
+  property="og:image"
+  content={new URL(image, Astro.site || 'https://www.emreozturanli.com').href}
+/>
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
@@ -71,7 +76,7 @@ const schema = {
 <meta property="twitter:description" content={description} />
 <meta
   property="twitter:image"
-  content={new URL(image, Astro.site || 'https://emreozturanli.com')}
+  content={new URL(image, Astro.site || 'https://www.emreozturanli.com').href}
 />
 
 <!-- JSON-LD -->
