@@ -6,9 +6,9 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://emreozturanli.com',
-  trailingSlash: 'never',
+  trailingSlash: 'ignore',
   build: {
-    format: 'file',
+    format: 'directory',
   },
   prefetch: true,
   integrations: [icon(), sitemap()],
