@@ -53,6 +53,8 @@ const currentPath = Astro.url.pathname;
     menuToggle?.addEventListener('click', () => {
       const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
       menuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
+      // Enable transitions only after user interaction
+      navLinks?.classList.add('has-interacted');
       navLinks?.classList.toggle('open');
       menuToggle.classList.toggle('open');
     });
@@ -64,6 +66,14 @@ const currentPath = Astro.url.pathname;
         menuToggle?.classList.remove('open');
         menuToggle?.setAttribute('aria-expanded', 'false');
       });
+    });
+
+    // Reset interaction state when crossing 640px breakpoint to prevent resize flash
+    const mq = window.matchMedia('(max-width: 640px)');
+    mq.addEventListener('change', () => {
+      navLinks?.classList.remove('has-interacted', 'open');
+      menuToggle?.classList.remove('open');
+      menuToggle?.setAttribute('aria-expanded', 'false');
     });
   });
 </script>
@@ -184,11 +194,18 @@ const currentPath = Astro.url.pathname;
       gap: var(--space-xl);
       background: var(--color-bg);
       z-index: 100;
-      /* Animation initial state */
+      /* Hidden by default on mobile — no transition so resize doesn't flash */
       opacity: 0;
       visibility: hidden;
       transform: translateY(-10px);
-      transition: all var(--transition-normal);
+    }
+
+    /* Enable transitions only after user has interacted — prevents resize flash */
+    .nav-links.has-interacted {
+      transition:
+        opacity var(--transition-normal),
+        transform var(--transition-normal),
+        visibility var(--transition-normal);
     }
 
     .nav-links.open {
