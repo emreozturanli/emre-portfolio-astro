@@ -47,6 +47,7 @@ All commands are run from the root of the project:
 | `npm run lint`            | Run ESLint to check for code issues              |
 | `npm run format`          | Format code with Prettier                        |
 
+
 ## � License
 
 This project is open source and available under the [MIT License](LICENSE).
